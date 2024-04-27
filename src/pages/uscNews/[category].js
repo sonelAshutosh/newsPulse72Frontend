@@ -1,14 +1,18 @@
 import VerticalScrollableCards from '@/components/VerticalScrollableCards.js'
 import axios from '../../axios.jsx'
 import React, { useEffect, useState } from 'react'
+import Cookies from 'js-cookie'
+import { useRouter } from 'next/router.js'
 
-function Index() {
+function Category() {
+  const router = useRouter()
+  const { category } = router.query
   const [news, setNews] = useState([])
 
   useEffect(() => {
     async function fetchNews() {
       try {
-        const res = await axios.get('/news')
+        const res = await axios.get(`/news/category/${category}`)
         const data = await res.data
         const { news } = data
         setNews(news)
@@ -28,4 +32,4 @@ function Index() {
   )
 }
 
-export default Index
+export default Category

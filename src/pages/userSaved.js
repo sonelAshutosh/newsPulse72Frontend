@@ -1,17 +1,21 @@
 import VerticalScrollableCards from '@/components/VerticalScrollableCards.js'
-import axios from '../../axios.jsx'
+import axios from '../axios.jsx'
 import React, { useEffect, useState } from 'react'
+import Cookies from 'js-cookie'
 
-function Index() {
+function UserSaved() {
   const [news, setNews] = useState([])
+  const userId = Cookies.get('userId')
 
   useEffect(() => {
     async function fetchNews() {
       try {
-        const res = await axios.get('/news')
-        const data = await res.data
-        const { news } = data
-        setNews(news)
+        if (userId) {
+          const res = await axios.get(`news/${userId}/getUserSavedNews`)
+          const data = await res.data
+          const { news } = data
+          setNews(news)
+        }
       } catch (error) {
         console.error(error)
       }
@@ -28,4 +32,4 @@ function Index() {
   )
 }
 
-export default Index
+export default UserSaved

@@ -1,24 +1,33 @@
-import React from 'react'
-
-const VerticalScrollableCards = () => {
-  return (
-    <div className="snap-start snap-always">
-      <div className="bg-gray-800 h-[92vh] p-4">
-        <h2 className="text-lg font-semibold">Card 1</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-      </div>
-    </div>
-  )
-}
+import VerticalScrollableCards from '@/components/VerticalScrollableCards.js'
+import axios from '../../axios.jsx'
+import React, { useEffect, useState } from 'react'
+import Cookies from 'js-cookie'
 
 function Index() {
+  const [news, setNews] = useState([])
+  const userId = Cookies.get('userId')
+
+  useEffect(() => {
+    async function fetchNews() {
+      try {
+        if (userId) {
+          const res = await axios.get(`/news/${userId}/uscNews`)
+          const data = await res.data
+          const { news } = data
+          setNews(news)
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchNews()
+  }, [])
+
   return (
     <div className="px-4 snap-mandatory snap-y overflow-auto h-screen  no-scrollbar">
-      <VerticalScrollableCards />
-      <VerticalScrollableCards />
-      <VerticalScrollableCards />
-      <VerticalScrollableCards />
-      <VerticalScrollableCards />
+      {news.map((article, index) => (
+        <VerticalScrollableCards key={index} article={article} />
+      ))}
     </div>
   )
 }
