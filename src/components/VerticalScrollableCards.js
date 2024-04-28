@@ -107,8 +107,8 @@ function VerticalScrollableCards({ article }) {
   }
 
   return (
-    <div className="snap-start snap-always">
-      <div className="bg-gray-800 h-[100vh] flex flex-col relative">
+    <div className="snap-start snap-always relative">
+      <div className="bg-gray-800 h-[100vh] flex flex-col">
         <img src={article.imageURL} alt={article.title} />
         <div className="flex gap-1 place-items-center pr-4">
           <h2 className="text-lg leading-tight font-semibold pt-4 pb-2 px-4 text-justify">
@@ -142,10 +142,10 @@ function VerticalScrollableCards({ article }) {
         </div>
         <div className="border border-gray-400 mx-4"></div>
         {/* BREAK LINE */}
-        <p className="px-4 p-2 text-justify overflow-hidden">
+        <p className="px-4 p-2 h-[35vh] text-justify overflow-y-auto">
           {article.summary}
         </p>
-        <div className="w-full flex justify-between absolute bottom-40 px-4">
+        <div className="w-full flex justify-between relative px-4 py-4">
           <div
             className={`px-4 justify-between place-items-center ${
               isLiked ? 'text-green-500' : 'text-gray-500'
